@@ -16,31 +16,31 @@
         </h1>
       </a>
       <ul class="flex gap-8">
-        {#snippet link(href: string, text: string)}
+        {#snippet navLink(href: string, text: string)}
           <li>
             <a class="font-space-grotesk text-base tracking-wider text-foreground" {href}>
               {text}
             </a>
           </li>
         {/snippet}
-        {@render link('/editor', 'EDITOR')}
-        {@render link('/docs', 'DOCS')}
+        {@render navLink('/editor', 'EDITOR')}
+        {@render navLink('/docs', 'DOCS')}
       </ul>
     </nav>
     <nav>
       <ul class="flex gap-4">
-        {#snippet link(href: string, icon: string)}
+        {#snippet iconLink(href: string, icon: string)}
           <li>
             <a class="flex items-center justify-center" {href} target="_blank">
               <Icon class="text-3xl text-subforeground" {icon}></Icon>
             </a>
           </li>
         {/snippet}
-        {@render link(
+        {@render iconLink(
           'https://github.com/enetwarch/markeditdown',
           'material-symbols:code-blocks-outline-sharp'
         )}
-        {@render link(
+        {@render iconLink(
           'https://github.com/enetwarch',
           'material-symbols:credit-card-heart-outline-sharp'
         )}

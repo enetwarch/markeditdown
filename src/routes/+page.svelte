@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
-  import { cn } from '$lib/utils';
   import type { MouseEventHandler } from 'svelte/elements';
+  import Editor from './Editor.svelte';
 
   type File = {
     type: 'file';
@@ -39,7 +39,7 @@
           <h2 class="font-space-grotesk text-lg font-bold tracking-widest text-primary">
             COMPUTER
           </h2>
-          {#snippet button(
+          {#snippet iconButton(
             label: string,
             icon: string,
             onclick?: MouseEventHandler<HTMLButtonElement>
@@ -52,14 +52,14 @@
               <Icon class="text-xl text-subforeground" {icon} />
             </button>
           {/snippet}
-          {@render button('Rename Button', 'material-symbols:edit-outline-sharp')}
-          {@render button('Delete Button', 'material-symbols:delete-outline-sharp')}
+          {@render iconButton('Rename Button', 'material-symbols:edit-outline-sharp')}
+          {@render iconButton('Delete Button', 'material-symbols:delete-outline-sharp')}
         </div>
         <p class="font-space-grotesk text-sm text-subforeground">Last edited 20m ago</p>
       </header>
     </div>
     <ul class="flex w-full flex-col">
-      {#snippet tree(nodes: (File | Directory)[], pl: number, increment: number)}
+      {#snippet fileTree(nodes: (File | Directory)[], pl: number, increment: number)}
         {#each nodes as node}
           <li class="flex w-full flex-col">
             <div class="flex items-center gap-2 py-2 pr-4" style:padding-left="{pl * 0.25}rem">
@@ -74,34 +74,15 @@
               </span>
             </div>
             {#if node.type == 'directory'}
-              {@render tree(node.children, pl + increment, increment)}
+              <ul class="flex w-full flex-col">
+                {@render fileTree(node.children, pl + increment, increment)}
+              </ul>
             {/if}
           </li>
         {/each}
       {/snippet}
-      {@render tree(nodes, 4, 4)}
+      {@render fileTree(nodes, 4, 4)}
     </ul>
   </aside>
-  <main class="flex w-full grow flex-col gap-0">
-    <header class="flex w-full border-b border-border bg-surface">
-      {#snippet mode(text: string, onclick?: MouseEventHandler<HTMLButtonElement>)}
-        <button
-          class={cn(
-            'flex items-center justify-center border-x border-border px-8 py-2',
-            'font-space-grotesk text-base tracking-wider text-foreground hover:cursor-pointer'
-          )}
-          draggable="true"
-          {onclick}
-        >
-          {text.toUpperCase()}
-        </button>
-      {/snippet}
-      {@render mode('EDIT')}
-      {@render mode('PREVIEW')}
-    </header>
-    <div class="flex grow gap-0">
-      <section class="flex grow border-r border-border bg-background"></section>
-      <section class="flex grow bg-surface"></section>
-    </div>
-  </main>
+  <Editor class="w-full grow" />
 </div>
