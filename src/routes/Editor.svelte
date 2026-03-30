@@ -3,6 +3,12 @@
   import type { HTMLButtonAttributes } from 'svelte/elements';
   let { class: className } = $props<{ class?: string }>();
 
+  let editModeActive = $state(true);
+  let previewModeActive = $state(true);
+  let onlyEditModeActive = $derived(editModeActive && !previewModeActive);
+  let onlyPreviewModeActive = $derived(previewModeActive && !editModeActive);
+  let bothModesActive = $derived(editModeActive && previewModeActive);
+
   let mainReference = $state<HTMLElement>();
   let editSplitPercent = $state(50);
   let isResizing = $state(false);
@@ -29,13 +35,15 @@
   }
 </script>
 
-<main bind:this={mainReference} class={cn('flex flex-col gap-0', className)}>
+<main bind:this={mainReference} class={cn('flex flex-col gap-0 bg-background', className)}>
   <header class="relative flex w-full border-b border-border bg-surface">
     {#snippet modeButton(text: string, { class: className, ...rest }: HTMLButtonAttributes = {})}
       <button
         class={cn(
-          'flex items-center justify-center border-x border-border px-8 py-2',
+          'flex items-center justify-center border-x border-b-3 border-x-border border-b-transparent px-8 py-2',
           'font-space-grotesk text-base tracking-wider text-foreground hover:cursor-pointer',
+          'data-[active=true]:font-bold data-[active=true]:text-primary',
+          'data-[active=true]:border-b-primary',
           className
         )}
         {...rest}
@@ -43,27 +51,52 @@
         {text.toUpperCase()}
       </button>
     {/snippet}
-    {@render modeButton('EDIT')}
+    {@render modeButton('EDIT', {
+      class: 'border-l-0',
+      'data-active': editModeActive,
+      'data-onlyactive': onlyEditModeActive,
+      onclick: () => {
+        if (onlyEditModeActive) return;
+        editModeActive = !editModeActive;
+      }
+    })}
     {@render modeButton('PREVIEW', {
-      class: 'absolute',
-      style: `left: ${editSplitPercent}%`
+      class: cn(
+        'data-[active=true]:absolute data-[active=false]:border-l-0',
+        'data-[onlyactive=true]:static data-[onlyactive=true]:border-l-0'
+      ),
+      style: `left: ${editSplitPercent}%`,
+      'data-active': previewModeActive,
+      'data-onlyactive': onlyPreviewModeActive,
+      onclick: () => {
+        if (onlyPreviewModeActive) return;
+        previewModeActive = !previewModeActive;
+      }
     })}
   </header>
   <div class="flex grow gap-0">
     <section
-      class="flex grow bg-background"
+      class="flex grow bg-background data-[active=false]:hidden"
       style="width: {editSplitPercent}%"
+      data-active={editModeActive}
+      data-onlyactive={onlyEditModeActive}
       aria-label="Edit Section"
     ></section>
     <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <div
       role="separator"
       onmousedown={startResize}
-      class="z-999 h-full w-px cursor-col-resize bg-border"
+      data-active={bothModesActive}
+      class="z-999 -mx-2 h-full w-4 cursor-col-resize opacity-0 data-[active=false]:hidden"
     ></div>
     <section
-      class="flex grow resize bg-surface"
+      class={cn(
+        'flex grow resize bg-surface data-[active=false]:hidden data-[active=true]:border-border',
+        'data-[active=true]:border-l  data-[onlyactive=true]:border-l-0'
+      )}
       style="width: {100 - editSplitPercent}%"
+      data-active={previewModeActive}
+      data-onlyactive={onlyPreviewModeActive}
       aria-label="Preview Section"
     ></section>
   </div>
