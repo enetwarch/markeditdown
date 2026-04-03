@@ -6,7 +6,18 @@
   --color-primary: #9cff93;
   --color-background: #0e0e0e;
   --color-surface: #131313;
+  --color-subsurface: #262626;
   --color-border: #262626;
   --color-foreground: #f5f5f5;
   --color-subforeground: #adaaaa;
+}
+
+@layer base {
+  body {
+    @apply bg-background font-space-grotesk text-foreground;
+  }
+
+  *:focus-visible {
+    @apply outline-3 outline-offset-1 outline-primary;
+  }
 }

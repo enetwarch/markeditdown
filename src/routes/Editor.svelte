@@ -40,10 +40,7 @@
     {#snippet modeButton(text: string, { class: className, ...rest }: HTMLButtonAttributes = {})}
       <button
         class={cn(
-          'flex items-center justify-center border-x border-b-3 border-x-border border-b-transparent px-8 py-2',
-          'font-space-grotesk text-base tracking-wider text-foreground hover:cursor-pointer',
-          'data-[active=true]:font-bold data-[active=true]:text-primary',
-          'data-[active=true]:border-b-primary',
+          'flex items-center justify-center border-x border-b-3 border-x-border border-b-transparent px-8 py-2 font-space-grotesk text-base tracking-wider text-foreground hover:cursor-pointer data-[active=true]:border-b-primary data-[active=true]:font-bold data-[active=true]:tracking-widest data-[active=true]:text-primary',
           className
         )}
         {...rest}
@@ -61,10 +58,8 @@
       }
     })}
     {@render modeButton('PREVIEW', {
-      class: cn(
-        'data-[active=true]:absolute data-[active=false]:border-l-0',
-        'data-[onlyactive=true]:static data-[onlyactive=true]:border-l-0'
-      ),
+      class:
+        'data-[active=true]:absolute data-[active=false]:border-l-0 data-[onlyactive=true]:static data-[onlyactive=true]:border-l-0',
       style: `left: ${editSplitPercent}%`,
       'data-active': previewModeActive,
       'data-onlyactive': onlyPreviewModeActive,
@@ -90,10 +85,7 @@
       class="z-999 -mx-2 h-full w-4 cursor-col-resize opacity-0 data-[active=false]:hidden"
     ></div>
     <section
-      class={cn(
-        'flex grow resize bg-surface data-[active=false]:hidden data-[active=true]:border-border',
-        'data-[active=true]:border-l  data-[onlyactive=true]:border-l-0'
-      )}
+      class="flex grow resize bg-surface data-[active=false]:hidden data-[active=true]:border-l data-[active=true]:border-border data-[onlyactive=true]:border-l-0"
       style="width: {100 - editSplitPercent}%"
       data-active={previewModeActive}
       data-onlyactive={onlyPreviewModeActive}
