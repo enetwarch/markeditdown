@@ -2,6 +2,7 @@
   import { cn } from '$lib/utils';
   import type { HTMLButtonAttributes } from 'svelte/elements';
   import Edit from './Edit.svelte';
+  import sampleContent from './sample.md?raw';
 
   let editModeActive = $state(true);
   let previewModeActive = $state(true);
@@ -33,6 +34,8 @@
     window.removeEventListener('mousemove', handleResize);
     window.removeEventListener('mouseup', stopResize);
   }
+
+  let content = $state<string>(sampleContent);
 </script>
 
 <div class="flex grow">
@@ -77,6 +80,7 @@
         data-active={editModeActive}
         data-onlyactive={onlyEditModeActive}
         aria-label="Edit Section"
+        bind:content
       />
       <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
       <div

@@ -22,12 +22,7 @@
   } from '@codemirror/language';
   import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
   import { searchKeymap, highlightSelectionMatches } from '@codemirror/search';
-  import {
-    autocompletion,
-    completionKeymap,
-    closeBrackets,
-    closeBracketsKeymap
-  } from '@codemirror/autocomplete';
+  import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
   import { markdown } from '@codemirror/lang-markdown';
   import { languages } from '@codemirror/language-data';
   import { tags } from '@lezer/highlight';
@@ -37,16 +32,36 @@
     content = $bindable(),
     ...rest
   } = $props<{ class?: string; content?: string } & SvelteHTMLElements['section']>();
-  let editorContainer = $state<HTMLDivElement>();
+  let editorContainer = $state<HTMLElement>();
   let view = $state<EditorView>();
 
   const highlighting = HighlightStyle.define([
-    /* { tag: tags.keyword, color: 'var(--color-primary)' },
+    // Block-Level Structure (The "Skeleton")
+    { tag: tags.heading, color: 'var(--color-primary)', fontWeight: 'bold' },
+    { tag: tags.quote, color: 'var(--color-subforeground)', fontStyle: 'italic' },
+    { tag: tags.contentSeparator, color: 'var(--color-primary)', fontWeight: 'bold' },
+    { tag: tags.list, color: 'var(--color-primary)' },
+
+    // Inline Formatting (The "Emphasizers")
+    { tag: tags.strong, color: 'var(--color-primary)', fontWeight: 'bold' },
+    { tag: tags.emphasis, fontStyle: 'italic' },
+    { tag: tags.strikethrough, textDecoration: 'line-through' },
+    { tag: tags.monospace, color: 'var(--color-primary)' },
+
+    // Links and References
+    { tag: tags.link, color: 'var(--color-primary)', textDecoration: 'underline' },
+    { tag: tags.labelName, color: 'var(--color-primary)' },
+    { tag: tags.url, color: 'var(--color-subforeground)', textDecoration: 'underline' },
+    { tag: tags.propertyName, color: 'var(--color-primary)' },
+
+    // Programming & Syntax (For Fenced Code Blocks)
+    { tag: tags.keyword, color: 'var(--color-primary)' },
     { tag: tags.operator, color: 'var(--color-primary)' },
-    { tag: tags.comment, color: '#adaaaa', fontStyle: 'italic' },
-    { tag: tags.heading1, fontWeight: 'bold', color: 'var(--color-primary)' },
-    { tag: tags.link, color: '#9cff93', textDecoration: 'underline' } */
-    // TODO: Add syntax higlighting
+    { tag: tags.comment, color: 'var(--color-subforeground)', fontStyle: 'italic' },
+
+    // Meta & Technical
+    { tag: tags.meta, color: 'var(--color-subforeground)' },
+    { tag: tags.content, color: 'var(--color-foreground)' }
   ]);
 
   onMount(() => {
@@ -65,7 +80,6 @@
         syntaxHighlighting(highlighting),
         bracketMatching(),
         closeBrackets(),
-        autocompletion(),
         rectangularSelection(),
         crosshairCursor(),
         highlightActiveLine(),
@@ -75,8 +89,7 @@
           ...closeBracketsKeymap,
           ...defaultKeymap,
           ...searchKeymap,
-          ...historyKeymap,
-          ...completionKeymap
+          ...historyKeymap
         ]),
         markdown({ codeLanguages: languages }),
         EditorView.lineWrapping,
@@ -101,7 +114,7 @@
     color: var(--color-foreground) !important;
     background-color: var(--color-background) !important;
     font-family: 'Source Code Pro', monospace !important;
-    font-size: 16px !important;
+    font-size: 1rem !important;
     height: 100% !important;
   }
 
@@ -112,17 +125,17 @@
   section.editor :global(.cm-gutters) {
     background-color: var(--color-surface) !important;
     color: var(--color-subforeground) !important;
-    border-right: none !important;
+    border-right: 1px solid var(--color-border) !important;
   }
 
   section.editor :global(.cm-gutterElement) {
-    padding-inline: 16px !important;
+    padding-inline: 1rem !important;
     text-align: right !important;
   }
 
   section.editor :global(.cm-activeLineGutter) {
     background-color: var(--color-primary) !important;
-    color: var(--color-background) !important;
+    color: var(--color-surface) !important;
   }
 
   section.editor :global(.cm-content) {
