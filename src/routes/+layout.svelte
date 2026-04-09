@@ -31,7 +31,7 @@
       <ul class="flex gap-4">
         {#snippet iconLink(href: string, icon: string)}
           <li>
-            <a class="flex items-center justify-center" {href} target="_blank">
+            <a class="flex items-center justify-center" {href} target="_blank" rel="noreferrer">
               <Icon class="text-3xl text-subforeground" {icon}></Icon>
             </a>
           </li>
@@ -50,8 +50,10 @@
   {@render children()}
   <footer class="flex w-full justify-center border-t border-border bg-background p-2">
     <p class="font-space-grotesk text-subforeground">
-      Made with
-      <a class="underline" href="https://svelte.dev/" target="_blank">Svelte</a>
+      Made by
+      <a class="underline" href="https://github.com/enetwarch" target="_blank" rel="noreferrer"
+        >Enetwarch</a
+      >
     </p>
   </footer>
 </div>
