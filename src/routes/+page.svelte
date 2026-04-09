@@ -1,6 +1,7 @@
 <script lang="ts">
   import { cn } from '$lib/utils';
   import type { HTMLButtonAttributes } from 'svelte/elements';
+  import Edit from './Edit.svelte';
 
   let editModeActive = $state(true);
   let previewModeActive = $state(true);
@@ -70,13 +71,13 @@
       })}
     </header>
     <div class="flex grow gap-0">
-      <section
-        class="flex grow bg-background data-[active=false]:hidden"
+      <Edit
+        class="flex grow data-[active=false]:hidden"
         style="width: {editSplitPercent}%"
         data-active={editModeActive}
         data-onlyactive={onlyEditModeActive}
         aria-label="Edit Section"
-      ></section>
+      />
       <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
       <div
         role="separator"
