@@ -1,7 +1,7 @@
 <script lang="ts">
-  import './layout.css';
-  import favicon from '$lib/assets/favicon.svg';
-  import Icon from '@iconify/svelte';
+  import "./layout.css";
+  import favicon from "$lib/assets/favicon.svg";
+  import Icon from "@iconify/svelte";
 
   let { children } = $props();
 </script>
@@ -23,8 +23,8 @@
             </a>
           </li>
         {/snippet}
-        {@render navLink('/editor', 'EDITOR')}
-        {@render navLink('/docs', 'DOCS')}
+        {@render navLink("/editor", "EDITOR")}
+        {@render navLink("/docs", "DOCS")}
       </ul>
     </nav>
     <nav>
@@ -37,12 +37,12 @@
           </li>
         {/snippet}
         {@render iconLink(
-          'https://github.com/enetwarch/markeditdown',
-          'material-symbols:code-blocks-outline-sharp'
+          "https://github.com/enetwarch/markeditdown",
+          "material-symbols:code-blocks-outline-sharp"
         )}
         {@render iconLink(
-          'https://github.com/enetwarch',
-          'material-symbols:credit-card-heart-outline-sharp'
+          "https://github.com/enetwarch",
+          "material-symbols:credit-card-heart-outline-sharp"
         )}
       </ul>
     </nav>

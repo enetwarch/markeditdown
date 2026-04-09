@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import type { SvelteHTMLElements } from 'svelte/elements';
-  import { cn } from '$lib/utils';
+  import { onMount } from "svelte";
+  import type { SvelteHTMLElements } from "svelte/elements";
+  import { cn } from "$lib/utils";
   import {
     EditorView,
     lineNumbers,
@@ -12,56 +12,56 @@
     rectangularSelection,
     crosshairCursor,
     highlightActiveLine,
-    keymap
-  } from '@codemirror/view';
+    keymap,
+  } from "@codemirror/view";
   import {
     indentOnInput,
     syntaxHighlighting,
     HighlightStyle,
-    bracketMatching
-  } from '@codemirror/language';
-  import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
-  import { searchKeymap, highlightSelectionMatches } from '@codemirror/search';
-  import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
-  import { markdown } from '@codemirror/lang-markdown';
-  import { languages } from '@codemirror/language-data';
-  import { tags } from '@lezer/highlight';
+    bracketMatching,
+  } from "@codemirror/language";
+  import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
+  import { searchKeymap, highlightSelectionMatches } from "@codemirror/search";
+  import { closeBrackets, closeBracketsKeymap } from "@codemirror/autocomplete";
+  import { markdown } from "@codemirror/lang-markdown";
+  import { languages } from "@codemirror/language-data";
+  import { tags } from "@lezer/highlight";
 
   let {
     class: className,
     content = $bindable(),
     ...rest
-  } = $props<{ class?: string; content?: string } & SvelteHTMLElements['section']>();
+  } = $props<{ class?: string; content?: string } & SvelteHTMLElements["section"]>();
   let editorContainer = $state<HTMLElement>();
   let view = $state<EditorView>();
 
   const highlighting = HighlightStyle.define([
     // Block-Level Structure (The "Skeleton")
-    { tag: tags.heading, color: 'var(--color-primary)', fontWeight: 'bold' },
-    { tag: tags.quote, color: 'var(--color-subforeground)', fontStyle: 'italic' },
-    { tag: tags.contentSeparator, color: 'var(--color-primary)', fontWeight: 'bold' },
-    { tag: tags.list, color: 'var(--color-primary)' },
+    { tag: tags.heading, color: "var(--color-primary)", fontWeight: "bold" },
+    { tag: tags.quote, color: "var(--color-subforeground)", fontStyle: "italic" },
+    { tag: tags.contentSeparator, color: "var(--color-primary)", fontWeight: "bold" },
+    { tag: tags.list, color: "var(--color-primary)" },
 
     // Inline Formatting (The "Emphasizers")
-    { tag: tags.strong, color: 'var(--color-primary)', fontWeight: 'bold' },
-    { tag: tags.emphasis, fontStyle: 'italic' },
-    { tag: tags.strikethrough, textDecoration: 'line-through' },
-    { tag: tags.monospace, color: 'var(--color-primary)' },
+    { tag: tags.strong, color: "var(--color-primary)", fontWeight: "bold" },
+    { tag: tags.emphasis, fontStyle: "italic" },
+    { tag: tags.strikethrough, textDecoration: "line-through" },
+    { tag: tags.monospace, color: "var(--color-primary)" },
 
     // Links and References
-    { tag: tags.link, color: 'var(--color-primary)', textDecoration: 'underline' },
-    { tag: tags.labelName, color: 'var(--color-primary)' },
-    { tag: tags.url, color: 'var(--color-subforeground)', textDecoration: 'underline' },
-    { tag: tags.propertyName, color: 'var(--color-primary)' },
+    { tag: tags.link, color: "var(--color-primary)", textDecoration: "underline" },
+    { tag: tags.labelName, color: "var(--color-primary)" },
+    { tag: tags.url, color: "var(--color-subforeground)", textDecoration: "underline" },
+    { tag: tags.propertyName, color: "var(--color-primary)" },
 
     // Programming & Syntax (For Fenced Code Blocks)
-    { tag: tags.keyword, color: 'var(--color-primary)' },
-    { tag: tags.operator, color: 'var(--color-primary)' },
-    { tag: tags.comment, color: 'var(--color-subforeground)', fontStyle: 'italic' },
+    { tag: tags.keyword, color: "var(--color-primary)" },
+    { tag: tags.operator, color: "var(--color-primary)" },
+    { tag: tags.comment, color: "var(--color-subforeground)", fontStyle: "italic" },
 
     // Meta & Technical
-    { tag: tags.meta, color: 'var(--color-subforeground)' },
-    { tag: tags.content, color: 'var(--color-foreground)' }
+    { tag: tags.meta, color: "var(--color-subforeground)" },
+    { tag: tags.content, color: "var(--color-foreground)" },
   ]);
 
   onMount(() => {
@@ -89,7 +89,7 @@
           ...closeBracketsKeymap,
           ...defaultKeymap,
           ...searchKeymap,
-          ...historyKeymap
+          ...historyKeymap,
         ]),
         markdown({ codeLanguages: languages }),
         EditorView.lineWrapping,
@@ -97,15 +97,15 @@
           if (update.docChanged) {
             content = update.state.doc.toString();
           }
-        })
+        }),
       ],
-      parent: editorContainer
+      parent: editorContainer,
     });
     return () => view?.destroy();
   });
 </script>
 
-<section class={cn('editor bg-background', className)} aria-label="Edit Section" {...rest}>
+<section class={cn("editor bg-background", className)} aria-label="Edit Section" {...rest}>
   <div bind:this={editorContainer} class="h-full w-full overflow-hidden"></div>
 </section>
 
@@ -113,7 +113,7 @@
   section.editor :global(.cm-editor) {
     color: var(--color-foreground) !important;
     background-color: var(--color-background) !important;
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: "Source Code Pro", monospace !important;
     font-size: 1rem !important;
     height: 100% !important;
   }

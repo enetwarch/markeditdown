@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { cn } from '$lib/utils';
-  import type { HTMLButtonAttributes } from 'svelte/elements';
-  import Edit from './Edit.svelte';
-  import sampleContent from './sample.md?raw';
+  import { cn } from "$lib/utils";
+  import type { HTMLButtonAttributes } from "svelte/elements";
+  import Edit from "./Edit.svelte";
+  import sampleContent from "./sample.md?raw";
 
   let editModeActive = $state(true);
   let previewModeActive = $state(true);
@@ -25,14 +25,14 @@
   function startResize(event: MouseEvent) {
     event.preventDefault(); // allows rapid resizing
     isResizing = true;
-    window.addEventListener('mousemove', handleResize);
-    window.addEventListener('mouseup', stopResize);
+    window.addEventListener("mousemove", handleResize);
+    window.addEventListener("mouseup", stopResize);
   }
 
   function stopResize() {
     isResizing = false;
-    window.removeEventListener('mousemove', handleResize);
-    window.removeEventListener('mouseup', stopResize);
+    window.removeEventListener("mousemove", handleResize);
+    window.removeEventListener("mouseup", stopResize);
   }
 
   let content = $state<string>(sampleContent);
@@ -44,7 +44,7 @@
       {#snippet modeButton(text: string, { class: className, ...rest }: HTMLButtonAttributes = {})}
         <button
           class={cn(
-            'flex items-center justify-center border-x border-b-3 border-x-border border-b-transparent px-8 py-2 font-space-grotesk text-base tracking-wider text-foreground hover:cursor-pointer data-[active=true]:border-b-primary data-[active=true]:font-bold data-[active=true]:tracking-widest data-[active=true]:text-primary',
+            "flex items-center justify-center border-x border-b-3 border-x-border border-b-transparent px-8 py-2 font-space-grotesk text-base tracking-wider text-foreground hover:cursor-pointer data-[active=true]:border-b-primary data-[active=true]:font-bold data-[active=true]:tracking-widest data-[active=true]:text-primary",
             className
           )}
           {...rest}
@@ -52,25 +52,25 @@
           {text.toUpperCase()}
         </button>
       {/snippet}
-      {@render modeButton('EDIT', {
-        class: 'border-l-0',
-        'data-active': editModeActive,
-        'data-onlyactive': onlyEditModeActive,
+      {@render modeButton("EDIT", {
+        class: "border-l-0",
+        "data-active": editModeActive,
+        "data-onlyactive": onlyEditModeActive,
         onclick: () => {
           if (onlyEditModeActive) return;
           editModeActive = !editModeActive;
-        }
+        },
       })}
-      {@render modeButton('PREVIEW', {
+      {@render modeButton("PREVIEW", {
         class:
-          'data-[active=true]:absolute data-[active=false]:border-l-0 data-[onlyactive=true]:static data-[onlyactive=true]:border-l-0',
+          "data-[active=true]:absolute data-[active=false]:border-l-0 data-[onlyactive=true]:static data-[onlyactive=true]:border-l-0",
         style: `left: ${editSplitPercent}%`,
-        'data-active': previewModeActive,
-        'data-onlyactive': onlyPreviewModeActive,
+        "data-active": previewModeActive,
+        "data-onlyactive": onlyPreviewModeActive,
         onclick: () => {
           if (onlyPreviewModeActive) return;
           previewModeActive = !previewModeActive;
-        }
+        },
       })}
     </header>
     <div class="flex grow gap-0">
