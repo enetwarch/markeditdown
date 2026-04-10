@@ -12,8 +12,11 @@
   let {
     class: className,
     content = $bindable(),
+    element = $bindable(),
     ...rest
-  } = $props<{ class?: string; content?: string } & SvelteHTMLElements["section"]>();
+  } = $props<
+    { class?: string; content?: string; element?: HTMLElement } & SvelteHTMLElements["section"]
+  >();
 
   async function processMarkdown(content: string) {
     const file = await unified()
@@ -66,6 +69,7 @@
     className
   )}
   aria-label="Preview Section"
+  bind:this={element}
   {...rest}
 >
   {@html html}

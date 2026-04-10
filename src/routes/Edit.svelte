@@ -30,8 +30,11 @@
   let {
     class: className,
     content = $bindable(),
+    element = $bindable(),
     ...rest
-  } = $props<{ class?: string; content?: string } & SvelteHTMLElements["section"]>();
+  } = $props<
+    { class?: string; content?: string; element?: HTMLElement } & SvelteHTMLElements["section"]
+  >();
   let editorContainer = $state<HTMLElement>();
   let view = $state<EditorView>();
 
@@ -103,6 +106,7 @@
       ],
       parent: editorContainer,
     });
+    element = view.scrollDOM;
     return () => view?.destroy();
   });
 </script>
