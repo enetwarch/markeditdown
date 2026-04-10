@@ -43,20 +43,22 @@
     { tag: tags.list, color: "var(--color-primary)" },
 
     // Inline Formatting (The "Emphasizers")
-    { tag: tags.strong, color: "var(--color-primary)", fontWeight: "bold" },
-    { tag: tags.emphasis, fontStyle: "italic" },
-    { tag: tags.strikethrough, textDecoration: "line-through" },
+    { tag: tags.strong, color: "var(--color-foreground)", fontWeight: "bold" },
+    { tag: tags.emphasis, color: "var(--color-foreground)", fontStyle: "italic" },
+    { tag: tags.strikethrough, color: "var(--color-foreground)", textDecoration: "line-through" },
     { tag: tags.monospace, color: "var(--color-primary)" },
+
+    // Target the Markdown symbols (**, *, ~~, [ ]) specifically
+    { tag: tags.processingInstruction, color: "var(--color-primary)" },
+    { tag: tags.modifier, color: "var(--color-primary)" },
 
     // Links and References
     { tag: tags.link, color: "var(--color-primary)", textDecoration: "underline" },
     { tag: tags.labelName, color: "var(--color-primary)" },
     { tag: tags.url, color: "var(--color-subforeground)", textDecoration: "underline" },
-    { tag: tags.propertyName, color: "var(--color-primary)" },
 
     // Programming & Syntax (For Fenced Code Blocks)
     { tag: tags.keyword, color: "var(--color-primary)" },
-    { tag: tags.operator, color: "var(--color-primary)" },
     { tag: tags.comment, color: "var(--color-subforeground)", fontStyle: "italic" },
 
     // Meta & Technical
@@ -105,7 +107,11 @@
   });
 </script>
 
-<section class={cn("editor bg-background", className)} aria-label="Edit Section" {...rest}>
+<section
+  class={cn("editor bg-background text-foreground", className)}
+  aria-label="Edit Section"
+  {...rest}
+>
   <div bind:this={editorContainer} class="h-full w-full overflow-hidden"></div>
 </section>
 
