@@ -41,3 +41,45 @@ func main() {
     }
 }
 ```
+
+# MarkEditDown Extended Test Suite
+
+---
+
+## 5. Task Lists (Sync Test)
+
+- [x] Research Svelte 5 runes
+- [ ] Implement local-first storage
+- [ ] Finish the "Web-to-Steam" board game pipeline
+- [ ] Test two-way checkbox sync (Try clicking me in the preview!)
+
+## 6. Tables (Layout & Gap Test)
+
+| Framework | Language   | Role     | Status      |
+| :-------- | :--------- | :------- | :---------- |
+| Svelte 5  | TypeScript | Frontend | In Progress |
+| Go        | Golang     | Backend  | Active      |
+| SQLite    | SQL        | Database | Local-First |
+
+## 7. Nested Blockquotes & Complex Formatting
+
+> "The best way to predict the future is to invent it."
+>
+> > This is a nested quote to test your `border-left` and `padding` stacking.
+> >
+> > - It even contains a **list** inside it.
+
+## 8. Code Blocks with Different Languages
+
+```typescript
+// Testing TypeScript highlighting
+interface Project {
+  name: string;
+  isOpenSource: boolean;
+}
+
+const markEditDown: Project = {
+  name: "MarkEditDown",
+  isOpenSource: true,
+};
+```

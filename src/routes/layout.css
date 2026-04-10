@@ -4,6 +4,7 @@
 
 @theme {
   --font-space-grotesk: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-source-code-pro: "Source Code Pro", monospace;
   --color-primary: #9cff93;
   --color-background: #0e0e0e;
   --color-surface: #131313;

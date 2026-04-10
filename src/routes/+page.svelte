@@ -2,6 +2,7 @@
   import { cn } from "$lib/utils";
   import type { HTMLButtonAttributes } from "svelte/elements";
   import Edit from "./Edit.svelte";
+  import Preview from "./Preview.svelte";
   import sampleContent from "./sample.md?raw";
 
   let editModeActive = $state(true);
@@ -75,7 +76,7 @@
     </header>
     <div class="flex grow gap-0">
       <Edit
-        class="flex grow data-[active=false]:hidden"
+        class="grow data-[active=false]:hidden"
         style="width: {editSplitPercent}%"
         data-active={editModeActive}
         data-onlyactive={onlyEditModeActive}
@@ -89,13 +90,13 @@
         data-active={bothModesActive}
         class="z-999 -mx-2 h-full w-4 cursor-col-resize opacity-0 data-[active=false]:hidden"
       ></div>
-      <section
-        class="flex grow resize bg-surface data-[active=false]:hidden data-[active=true]:border-l data-[active=true]:border-border data-[onlyactive=true]:border-l-0"
+      <Preview
+        class="grow resize data-[active=false]:hidden data-[active=true]:border-l data-[active=true]:border-border data-[onlyactive=true]:border-l-0"
         style="width: {100 - editSplitPercent}%"
         data-active={previewModeActive}
         data-onlyactive={onlyPreviewModeActive}
-        aria-label="Preview Section"
-      ></section>
+        bind:content
+      ></Preview>
     </div>
   </main>
 </div>
