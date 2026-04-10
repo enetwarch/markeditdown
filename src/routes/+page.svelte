@@ -4,6 +4,7 @@
   import Edit from "./Edit.svelte";
   import Preview from "./Preview.svelte";
   import sampleContent from "./sample.md?raw";
+  import { appState } from "$lib/appState.svelte";
 
   let editModeActive = $state(true);
   let previewModeActive = $state(true);
@@ -37,9 +38,13 @@
   }
 
   let content = $state<string>(sampleContent);
+  $effect(() => {
+    appState.pageTitle = "MarkEditDown";
+    appState.rootAttributes = { class: "min-h-0 h-screen" };
+  });
 </script>
 
-<div class="flex grow">
+<div class="flex min-h-0 grow">
   <main bind:this={mainReference} class="flex w-full grow flex-col gap-0 bg-background">
     <header class="relative flex w-full border-b border-border bg-surface">
       {#snippet modeButton(text: string, { class: className, ...rest }: HTMLButtonAttributes = {})}
@@ -74,9 +79,9 @@
         },
       })}
     </header>
-    <div class="flex grow gap-0">
+    <div class="flex min-h-0 grow gap-0">
       <Edit
-        class="grow data-[active=false]:hidden"
+        class="h-full min-h-0 grow overflow-y-auto data-[active=false]:hidden"
         style="width: {editSplitPercent}%"
         data-active={editModeActive}
         data-onlyactive={onlyEditModeActive}
@@ -88,10 +93,10 @@
         role="separator"
         onmousedown={startResize}
         data-active={bothModesActive}
-        class="z-999 -mx-2 h-full w-4 cursor-col-resize opacity-0 data-[active=false]:hidden"
+        class="z-999 -mx-1 h-full w-2 cursor-col-resize opacity-0 data-[active=false]:hidden"
       ></div>
       <Preview
-        class="grow resize data-[active=false]:hidden data-[active=true]:border-l data-[active=true]:border-border data-[onlyactive=true]:border-l-0"
+        class="h-full min-h-0 grow resize overflow-y-auto data-[active=false]:hidden data-[active=true]:border-l data-[active=true]:border-border data-[onlyactive=true]:border-l-0"
         style="width: {100 - editSplitPercent}%"
         data-active={previewModeActive}
         data-onlyactive={onlyPreviewModeActive}

@@ -2,12 +2,18 @@
   import "./layout.css";
   import favicon from "$lib/assets/favicon.svg";
   import Icon from "@iconify/svelte";
+  import { appState } from "$lib/appState.svelte";
+  import { cn } from "$lib/utils";
 
+  let { class: className = "", ...restAttributes } = $derived(appState.rootAttributes ?? {});
   let { children } = $props();
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
-<div class="flex min-h-screen flex-col gap-0">
+<svelte:head>
+  <title>{appState.pageTitle}</title>
+  <link rel="icon" href={favicon} />
+</svelte:head>
+<div class={cn("flex min-h-screen flex-col gap-0", className)} {...restAttributes}>
   <header class="flex w-full items-center justify-between border-b border-border bg-background p-4">
     <nav class="flex items-center gap-12">
       <a href="/">
@@ -57,3 +63,36 @@
     </p>
   </footer>
 </div>
+
+<style>
+  @supports (not selector(::-webkit-scrollbar)) {
+    :global(*) {
+      scrollbar-width: thin !important;
+      scrollbar-color: var(--color-border) var(--color-background) !important;
+    }
+  }
+
+  :global(::-webkit-scrollbar) {
+    width: 0.75rem !important;
+    height: 0.75rem !important;
+  }
+
+  :global(::-webkit-scrollbar-track) {
+    background: var(--color-background) !important;
+    border-radius: 0 !important;
+  }
+
+  :global(::-webkit-scrollbar-thumb) {
+    background-color: var(--color-border) !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+
+  :global(::-webkit-scrollbar-thumb:hover) {
+    background-color: var(--color-primary) !important;
+  }
+
+  :global(::-webkit-scrollbar-button) {
+    display: none !important;
+  }
+</style>

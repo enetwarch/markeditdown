@@ -72,6 +72,10 @@
 </section>
 
 <style>
+  section.preview :global(> *) {
+    flex-shrink: 0;
+  }
+
   section.preview :global(h1),
   section.preview :global(h2),
   section.preview :global(h3),
