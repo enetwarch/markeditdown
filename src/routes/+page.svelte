@@ -5,6 +5,7 @@
   import Preview from "./Preview.svelte";
   import sampleContent from "./sample.md?raw";
   import { appState } from "$lib/appState.svelte";
+  import { onMount } from "svelte";
 
   let editModeActive = $state(true);
   let previewModeActive = $state(true);
@@ -86,10 +87,20 @@
     });
   });
 
-  let content = $state<string>(sampleContent);
   $effect(() => {
     appState.pageTitle = "MarkEditDown";
     appState.rootAttributes = { class: "min-h-0 h-screen" };
+  });
+
+  let content = $state<string>("")
+  onMount(() => {
+    const key = "content";
+    const savedContent = localStorage.getItem(key)
+    content = savedContent ? JSON.parse(savedContent) : sampleContent;
+
+    const handleUnload = () => localStorage.setItem(key, JSON.stringify(content))
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
   });
 </script>
 

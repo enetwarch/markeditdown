@@ -109,6 +109,20 @@
     element = view.scrollDOM;
     return () => view?.destroy();
   });
+
+  $effect(() => {
+    if (!view || !content) return;
+    const currentDocValue = view.state.doc.toString();
+    if (content !== currentDocValue) {
+      view.dispatch({
+        changes: {
+          from: 0,
+          to: currentDocValue.length,
+          insert: content
+        }
+      });
+    }
+  });
 </script>
 
 <section
