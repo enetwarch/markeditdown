@@ -1,6 +1,10 @@
 <script lang="ts">
   import "./layout.css";
-  import favicon from "$lib/assets/favicon.svg";
+  import faviconSvg from "$lib/assets/favicon.svg";
+  import faviconIco from "$lib/assets/favicon.ico";
+  import favicon96 from "$lib/assets/favicon-96x96.png";
+  import appleTouchIcon from "$lib/assets/apple-touch-icon.png";
+  import webManifest from "$lib/assets/site.webmanifest?url";
   import Icon from "@iconify/svelte";
   import { appState } from "$lib/appState.svelte";
   import { cn } from "$lib/utils";
@@ -11,8 +15,11 @@
 
 <svelte:head>
   <title>{appState.pageTitle}</title>
-  <link rel="icon" href={favicon} />
-</svelte:head>
+  <link rel="icon" type="image/svg+xml" href={faviconSvg} />
+  <link rel="icon" type="image/png" sizes="96x96" href={favicon96} />
+  <link rel="shortcut icon" href={faviconIco} />
+  <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
+  <link rel="manifest" href={webManifest} /></svelte:head>
 <div class={cn("flex min-h-screen flex-col gap-0", className)} {...restAttributes}>
   <header class="flex w-full items-center justify-between border-b border-border bg-background p-4">
     <nav class="flex items-center gap-12">
