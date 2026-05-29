@@ -47,7 +47,7 @@
           "material-symbols:code-blocks-outline-sharp"
         )}
         {@render iconLink(
-          "https://github.com/enetwarch",
+          "https://patreon.com/enetwarch?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink",
           "material-symbols:credit-card-heart-outline-sharp"
         )}
       </ul>
